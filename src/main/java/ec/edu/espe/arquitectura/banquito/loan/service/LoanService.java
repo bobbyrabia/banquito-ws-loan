@@ -209,4 +209,18 @@ public class LoanService {
         return guaranty;
     }
 
+    private BigDecimal obtainInterest(BigDecimal interestRate, BigDecimal amount, String unit, Integer period){
+        BigDecimal year = new BigDecimal(360);
+        BigDecimal month = new BigDecimal(30);
+        BigDecimal dailyInterest = (interestRate.divide(year)).multiply(amount);
+        BigDecimal monthlyInterest = dailyInterest.multiply(month);
+        if (unit == "MON"){
+            monthlyInterest.multiply(new BigDecimal(period));
+        }
+        if (unit == "YEA"){
+            monthlyInterest.multiply(new BigDecimal(period*12));
+        }
+        return monthlyInterest;
+    }
+
 }
